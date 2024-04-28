@@ -1,0 +1,8 @@
+# Folders
+.sf/
+.sfdx/
+.github/
+node_modules/
+
+# Files
+package-lock.json
