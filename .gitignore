@@ -2,6 +2,7 @@
 .sf/
 .sfdx/
 .github/
+.idea/
 node_modules/
 
 # Files
