@@ -4,6 +4,7 @@
 .github/
 .idea/
 node_modules/
+IlluminatedCloud/
 
 # Files
 package-lock.json
