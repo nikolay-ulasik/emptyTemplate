@@ -3,6 +3,7 @@
 .sfdx/
 .github/
 node_modules/
+.idea/
 
 # Files
 package-lock.json
