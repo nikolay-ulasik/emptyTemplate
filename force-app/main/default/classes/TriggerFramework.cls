@@ -34,29 +34,21 @@ public with sharing class TriggerFramework {
             this.oldRecordItems = Trigger.isExecuting ? Trigger.old : null;
             this.newRecordMap = Trigger.isExecuting ? Trigger.newMap : null;
             this.oldRecordMap = Trigger.isExecuting ? Trigger.oldMap : null;
-            this.operationName = Trigger.isExecuting
-                ? Trigger.operationType.name()
-                : null;
+            this.operationName = Trigger.isExecuting ? Trigger.operationType.name() : null;
             this.currentSObjectType = getCurrentSObjectType();
         }
 
         @TestVisible
         private SObjectType getCurrentSObjectType() {
-            List<SObject> recordItems = DELETE_TRIGGER_OPERATION_NAMES.contains(
-                    this.operationName
-                )
+            List<SObject> recordItems = DELETE_TRIGGER_OPERATION_NAMES.contains(this.operationName)
                 ? this.oldRecordItems
                 : this.newRecordItems;
-            return (recordItems != null)
-                ? recordItems.get(0).getSObjectType()
-                : null;
+            return (recordItems != null) ? recordItems.get(0).getSObjectType() : null;
         }
     }
 
     public static void handleRecords() {
-        TriggerWrapper currentTrigger = (!isRunningTest)
-            ? new TriggerWrapper()
-            : testTriggerWrapper;
+        TriggerWrapper currentTrigger = (!isRunningTest) ? new TriggerWrapper() : testTriggerWrapper;
 
         List<String> triggerHandlerNames = getTriggerHandlerNames(
             currentTrigger.currentSObjectType.getDescribe().getName()
@@ -66,10 +58,7 @@ public with sharing class TriggerFramework {
                 Type triggerHandlerType = Type.forName(triggerHandlerName);
                 if (triggerHandlerType != null) {
                     TriggerHandler triggerHandlerInstance = (TriggerHandler) triggerHandlerType.newInstance();
-                    callMethodFromTriggerHandler(
-                        triggerHandlerInstance,
-                        currentTrigger
-                    );
+                    callMethodFromTriggerHandler(triggerHandlerInstance, currentTrigger);
                 }
             }
         }
@@ -115,15 +104,11 @@ public with sharing class TriggerFramework {
         List<TriggerHandler__mdt> triggerHandlerRecords = [
             SELECT DeveloperName
             FROM TriggerHandler__mdt
-            WHERE
-                SobjectType__r.QualifiedApiName = :sObjectName
-                AND IsActive__c = TRUE
+            WHERE SobjectType__r.QualifiedApiName = :sObjectName AND IsActive__c = TRUE
             ORDER BY DeveloperName, Order__c
         ];
 
-        triggerHandlerRecords = (!isRunningTest)
-            ? triggerHandlerRecords
-            : testTriggerHandlerRecords;
+        triggerHandlerRecords = (!isRunningTest) ? triggerHandlerRecords : testTriggerHandlerRecords;
 
         for (TriggerHandler__mdt triggerHandlerRecord : triggerHandlerRecords) {
             result.add(triggerHandlerRecord.DeveloperName);
