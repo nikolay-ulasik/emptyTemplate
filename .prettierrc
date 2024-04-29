@@ -1,8 +1,32 @@
 {
     "tabWidth": 4,
-    "plugins": ["prettier-plugin-apex"],
+    "printWidth": 120,
+    "useTabs": false,
+    "bracketSpacing": false,
+    "bracketSameLine": true,
+    "singleQuote": false,
     "trailingComma": "none",
+    "plugins": ["@prettier/plugin-xml", "prettier-plugin-apex"],
     "overrides": [
+        {
+            "files": "*.js",
+            "options": {
+                "singleQuote": true
+            }
+        },
+        {
+            "files": "*.cls",
+            "options": {
+                "parser": "apex",
+                "singleQuote": true
+            }
+        },
+        {
+            "files": ["*.html", "*.{cmp,page,component}"],
+            "options": {
+                "parser": "html"
+            }
+        },
         {
             "files": "**/lwc/**/*.html",
             "options": {
@@ -10,9 +34,10 @@
             }
         },
         {
-            "files": "*.{cmp,page,component}",
+            "files": "*-meta.xml",
             "options": {
-                "parser": "html"
+                "parser": "xml",
+                "xmlSelfClosingSpace": false
             }
         }
     ]
